@@ -2,7 +2,7 @@
 
 桌面端 **DeepSeek Harness** —— 把官方 DeepSeek Harness 从"网页"变成"装在你电脑上的桌面软件"，再替你包办所有连官方都没做的后勤杂活。
 
-> 大肥鱼理念：壳不重复造轮子，只当官方 DeepSeek Harness 的"监护人"。
+> 软件核心理念：壳不重复造轮子，只当官方 DeepSeek Harness 的"监护人"。
 > UI 直接内嵌官方 Web（`http://127.0.0.1:3080`），因此 **界面与官方 Web 版 100% 一致**、**兼容全部 DSH 插件**。
 
 > 📄 完整产品简介 & 与官方对比：见 [`docs/INTRO.md`](docs/INTRO.md)
