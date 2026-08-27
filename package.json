@@ -1,0 +1,71 @@
+{
+  "name": "dsh-desktop",
+  "version": "0.1.0",
+  "description": "桌面端 DeepSeek Harness —— 一个守护官方 DSH Web 的 Electron 壳：自动探测/一键部署/托管启动/强制停止推理/插件扫描/主题壁纸/记忆编辑与迁移",
+  "main": "src/main/index.js",
+  "type": "commonjs",
+  "author": {
+    "name": "超高校级的幼刀"
+  },
+  "license": "MIT",
+  "productName": "双击请大肥鱼吃白饭",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux",
+    "report": "node tools/make-report.js"
+  },
+  "devDependencies": {
+    "electron": "33.4.11",
+    "electron-builder": "^24.13.3",
+    "sharp": "^0.35.4"
+  },
+  "build": {
+    "appId": "com.chaogaoxiaoji.youdao",
+    "productName": "双击请大肥鱼吃白饭",
+    "copyright": "Copyright © 超高校级的幼刀",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "installers/**/*",
+      "package.json",
+      "README.md"
+    ],
+    "asar": true,
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
+      ],
+      "icon": "assets/icon-user.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.developer-tools",
+      "icon": "assets/icon.icns"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "assets/icon.png",
+      "category": "Development"
+    }
+  }
+}

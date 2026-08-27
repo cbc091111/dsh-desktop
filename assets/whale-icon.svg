@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Q版大肥鱼（鲸鱼）应用图标：圆润 Q 版小鲸鱼，深海蓝滴，白肚皮，亮眼微笑 -->
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <!-- 圆角深蓝底（像手机 app 圆角图标） -->
+  <rect x="12" y="12" width="232" height="232" rx="52" ry="52" fill="#0e2a4a"/>
+  <rect x="12" y="12" width="232" height="232" rx="52" ry="52" fill="#10233f" opacity="0.0"/>
+
+  <!-- 顶部轻微高光 -->
+  <ellipse cx="80" cy="60" rx="70" ry="34" fill="#1b3f66" opacity="0.5"/>
+
+  <!-- 鲸鱼身体（水滴形，圆滚滚） -->
+  <g transform="translate(128,138)">
+    <!-- 身体主体 -->
+    <ellipse cx="0" cy="0" rx="74" ry="62" fill="#2f6fd0"/>
+    <!-- 白肚皮 -->
+    <ellipse cx="-4" cy="20" rx="52" ry="34" fill="#eef4ff"/>
+    <!-- 尾巴（左侧鱼尾） -->
+    <path d="M-70,6 C-96,-14 -118,-20 -128,-8 C-116,-4 -100,4 -84,18 C-98,16 -108,12 -112,6 C-100,14 -84,16 -70,20 Z" fill="#1f56b0"/>
+    <!-- 背鳍 -->
+    <path d="M20,-58 C30,-84 -8,-88 8,-66 C18,-62 26,-56 20,-58 Z" fill="#1f56b0"/>
+    <!-- 胸鳍（右侧小鳍） -->
+    <ellipse cx="40" cy="26" rx="18" ry="9" fill="#55a0ff" transform="rotate(-18 40 26)"/>
+    <!-- 左眼（大眼睛） -->
+    <circle cx="-22" cy="-10" r="15" fill="#ffffff"/>
+    <circle cx="-24" cy="-12" r="9" fill="#101418"/>
+    <circle cx="-21" cy="-15" r="3.4" fill="#ffffff"/>
+    <!-- 右眼 -->
+    <circle cx="22" cy="-10" r="15" fill="#ffffff"/>
+    <circle cx="20" cy="-12" r="9" fill="#101418"/>
+    <circle cx="23" cy="-15" r="3.4" fill="#ffffff"/>
+    <!-- 微笑 -->
+    <path d="M-14,16 Q0,30 14,16" stroke="#0a1a30" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <!-- 红晕（Q版腮红） -->
+    <ellipse cx="-34" cy="8" rx="9" ry="6" fill="#ff9bb0" opacity="0.7"/>
+    <ellipse cx="34" cy="8" rx="9" ry="6" fill="#ff9bb0" opacity="0.7"/>
+  </g>
+
+  <!-- 头顶喷水 -->
+  <g stroke="#9fc9ff" stroke-width="5" stroke-linecap="round" fill="none">
+    <path d="M118,62 C120,46 116,38 122,28"/>
+    <path d="M134,58 C138,44 134,36 138,26"/>
+    <path d="M150,62 C156,50 150,42 152,32"/>
+  </g>
+  <g fill="#9fc9ff">
+    <circle cx="122" cy="22" r="7"/>
+    <circle cx="138" cy="19" r="7"/>
+    <circle cx="152" cy="26" r="6"/>
+  </g>
+</svg>

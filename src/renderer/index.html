@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; frame-src *;" />
+  <title>DSH Desktop — DeepSeek Harness</title>
+  <link rel="stylesheet" href="styles/base.css" />
+  <link rel="stylesheet" href="styles/themes.css" />
+</head>
+<body>
+  <!-- 顶栏：GitHub 开发者式，左侧品牌 + 中间状态 + 右侧快捷操作 -->
+  <header id="topbar">
+    <div class="brand">
+      <span class="logo">🐋</span>
+      <span class="brand-name">DSH Desktop</span>
+      <span class="brand-sub">DeepSeek Harness</span>
+    </div>
+
+    <div class="status-center">
+      <span id="dot" class="dot" title="运行状态"></span>
+      <span id="statusText">检测中…</span>
+    </div>
+
+    <div class="actions">
+      <button id="btnRescan" title="重新检查">⟳ 重新检查</button>
+      <button id="btnRestart" title="一键重启官方 Web" class="danger">↻ 一键重启</button>
+      <button id="btnStop" title="强制停止推理（仅在推理中可用）" class="warn" disabled>■ 强制停止推理</button>
+      <button id="btnSettings" title="附加设置">⚙ 附加设置</button>
+    </div>
+  </header>
+
+  <div id="shell">
+    <!-- 侧栏收起时的"展开把手"：常驻在左侧一条窄签，点击才展开侧栏（不误触） -->
+    <button id="sidebar-tab" title="展开侧栏">▌</button>
+
+    <!-- 左导航：默认收起，点把手展开，移开自动收回（带平移动画） -->
+    <nav id="sidebar" class="collapsed">
+      <a href="#/home" class="nav-item active" data-view="home">🎛 主界面</a>
+      <a href="#/market" class="nav-item disabled" data-view="market" title="插件市场安装功能维护中，暂不可用，等更新即可">🛒 插件市场 <span class="mk-disabled-badge">维护中</span></a>
+      <a href="#/plugins" class="nav-item" data-view="plugins">🔌 插件</a>
+      <a href="#/settings" class="nav-item" data-view="settings"><span class="nav-icon-wrap">⚙ 附加设置<span class="update-dot hidden" title="有新版本可更新"></span></span></a>
+    </nav>
+
+    <!-- 内容区：官方 Web（直接显示），其余功能用浮层 -->
+    <main id="content">
+      <div id="webview-wrap">
+        <webview id="official"
+                 src="http://127.0.0.1:3080"
+                 partition="dsh-official"
+                 webpreferences="contextIsolation=yes"></webview>
+      </div>
+    </main>
+  </div>
+
+  <!-- 二级菜单 Flyout：从左侧滑入的非全屏侧滑面板（不盖掉 webview 内容被隐藏） -->
+  <!-- 打开时盖在 webview 之上（高 z-index），但 webview 本体永不 hidden，返回即见 -->
+  <div id="flyout" class="hidden">
+    <div class="flyout-card">
+      <header class="flyout-head">
+        <span id="flyoutTitle">插件</span>
+        <button id="flyoutClose" title="关闭" aria-label="关闭">✕</button>
+      </header>
+      <div class="flyout-body" id="flyoutBody"></div>
+    </div>
+  </div>
+
+  <!-- 启动失败引导框（M3）：官方 Web 没起来时询问是否强制启动 -->
+  <div id="failbox" class="hidden">
+    <div class="failbox-card">
+      <header class="failbox-head">
+        <span>🐋 没起来，肥鱼帮你看看</span>
+        <button id="failboxClose" title="关闭" aria-label="关闭">✕</button>
+      </header>
+      <div class="failbox-body">
+        <p id="failboxReason" class="muted" style="margin-bottom:14px"></p>
+        <div id="failboxActions" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px">
+          <button id="failboxForce" style="flex:1;min-width:160px">💪 强制启动</button>
+          <button id="failboxManual" style="flex:1;min-width:120px">我自己弄</button>
+        </div>
+        <div id="failboxFixes" class="hidden">
+          <h4 style="font-size:14px;margin-bottom:8px">🛠 常用解决办法（照着做就行）</h4>
+          <ol id="failboxFixList" class="fixlist"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 强制停止推理：二级确认菜单（M3 扩展） -->
+  <!-- 仅在"推理中"时可调出；同意才执行强制停止，拒绝则关闭回主界面 -->
+  <div id="forceConfirm" class="hidden">
+    <div class="force-confirm-card">
+      <header class="failbox-head">
+        <span>⚠️ 强制停止推理</span>
+        <button id="forceConfirmClose" title="关闭" aria-label="关闭">✕</button>
+      </header>
+      <div class="failbox-body">
+        <p style="font-size:14px;line-height:1.7;margin-bottom:16px">
+          🚨 这个操作是<strong>强制停止</strong>，<strong>不计后果</strong>的物理刹车。<br/>
+          贸然点击可能会让<strong>当前这次对话 / 任务被硬生生打断</strong>，
+          出现<strong>不确定的后果</strong>（比如任务没跑完、输出不完整、状态异常）。
+        </p>
+        <p style="font-size:13px;color:#8b949e;line-height:1.6;margin-bottom:18px">
+          除非你确定真的不想让它继续跑了，否则点“取消”回去更稳妥。
+        </p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button id="forceConfirmYes" style="flex:1;min-width:140px">我确定，强制停止</button>
+          <button id="forceConfirmNo" style="flex:1;min-width:120px">算了，取消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 全局 toaster：出错及时汇报，不打断 -->
+  <div id="toast-wrap"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
