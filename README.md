@@ -9,7 +9,7 @@
 
 Windows 用户请到右侧 **Releases** 页下载最新版：
 
-- **安装版**：`双击请大肥鱼吃白饭 Setup <版本>.exe`（双击一路下一步即可）
+- **安装版**：`dsh-desktop Setup <版本>.exe`（双击一路下一步即可）
 - **便携版**：`...-win.zip`（解压出来，双击里面的 exe 就能用）
 
 > 支持 Windows / macOS / Linux（安装包按平台发行）。
